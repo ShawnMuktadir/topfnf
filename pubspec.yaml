@@ -1,0 +1,38 @@
+name: topfnf
+description: A new Flutter project.
+
+publish_to: "none"
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.18.5 <3.0.0"
+
+dependencies:
+  connectivity_plus: ^3.0.2
+  cupertino_icons: ^1.0.2
+  dio: ^4.0.6
+  flutter:
+    sdk: flutter
+  flutter_svg: ^1.1.6
+  get: ^4.6.5
+
+dev_dependencies:
+  flutter_lints: ^2.0.0
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/images/find/
+    - assets/images/hire/
+    - assets/images/menu/
+    - assets/icons/
+    - assets/icons/bottomsheet/
+
+  fonts:
+    - family: Camphor
+      fonts:
+        - asset: assets/fonts/Camphor.ttf
