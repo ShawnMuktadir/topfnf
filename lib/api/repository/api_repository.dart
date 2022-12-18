@@ -7,7 +7,7 @@ import 'package:topfnf/models/services_model.dart';
 import 'package:topfnf/models/services_response.dart';
 
 class ApiRepo {
-  Future<ServicesResponse?> getProducts() async {
+  Future<ServicesResponse?> getServices() async {
     final connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.none) {
       return ServicesResponse.withError(
@@ -21,10 +21,10 @@ class ApiRepo {
 
       // ignore: unnecessary_null_comparison
       if (response != null) {
-        List<ServicesModel> products = List<ServicesModel>.from(
+        List<ServicesModel> services = List<ServicesModel>.from(
             response.data.map((x) => ServicesModel.fromJson(x)));
 
-        return ServicesResponse(success: true, productList: products);
+        return ServicesResponse(success: true, servicesList: services);
       }
 
       return ServicesResponse.withError(

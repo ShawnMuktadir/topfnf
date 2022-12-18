@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:topfnf/init_app.dart';
 import 'package:topfnf/routes/routes.dart';
 import 'package:topfnf/utils/color_utils.dart';
 import 'package:topfnf/utils/font_utils.dart';
@@ -16,6 +17,7 @@ Future main() async {
       systemNavigationBarIconBrightness: Brightness.light,
     ),
   );
+  await initApp();
   runApp(
     GetMaterialApp(
       debugShowCheckedModeBanner: false,

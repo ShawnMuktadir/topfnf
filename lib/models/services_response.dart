@@ -7,13 +7,13 @@ class ServicesResponse {
     this.success = false,
     this.message,
     this.statusCode,
-    this.productList,
+    this.servicesList,
   });
 
   bool success = false;
   int? statusCode;
   String? message;
-  List<ServicesModel>? productList;
+  List<ServicesModel>? servicesList;
 
   bool get isSuccess => success;
 
@@ -33,7 +33,7 @@ class ServicesResponse {
         statusCode: json["statusCode"],
         message: json["message"],
         success: json["success"],
-        productList: json["product_list"] == null
+        servicesList: json["product_list"] == null
             ? null
             : List<ServicesModel>.from(
                 json["product_list"].map(
@@ -46,10 +46,10 @@ class ServicesResponse {
         "message": message,
         "statusCode": statusCode,
         "success": success,
-        "product_list": productList == null
+        "product_list": servicesList == null
             ? null
             : List<dynamic>.from(
-                productList!.map(
+                servicesList!.map(
                   (x) => x.toJson(),
                 ),
               ),

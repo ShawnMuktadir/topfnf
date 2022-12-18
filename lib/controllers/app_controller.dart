@@ -23,11 +23,12 @@ class AppController extends GetxController {
       _isLoadingIndex.value[index] ?? defaultValue;
 
   // ignore: invalid_use_of_protected_member
-  List<ServicesModel> get productsList => _servicesList.value;
+  List<ServicesModel> get servicesList => _servicesList.value;
 
   @override
   void onInit() {
     Log.loga(title, "onInit:: >>>>>>> ");
+    getServices();
     super.onInit();
   }
 
@@ -46,13 +47,13 @@ class AppController extends GetxController {
   void getServices() async {
     setLoading(true);
     try {
-      final result = await ApiRepo().getProducts();
+      final result = await ApiRepo().getServices();
       // Log.loga(title, "getProducts:: result >>>>> ${result!.toJson()}");
 
       setLoading(false);
       if (result != null) {
         if (result.isSuccess) {
-          _servicesList.value = result.productList ?? [];
+          _servicesList.value = result.servicesList ?? [];
         } else {
           ConstantsUtils.showSnackbar(
               "Api Error Response", "error:: ${result.message}");

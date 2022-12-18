@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:topfnf/data/feature_menu_data.dart';
 import 'package:topfnf/utils/color_utils.dart';
 import 'package:topfnf/utils/dimension_utils.dart';
+import 'package:topfnf/utils/log_utils.dart';
+import 'package:topfnf/utils/my_application.dart';
 import 'package:topfnf/utils/style_utils.dart';
 import 'package:topfnf/widgets/dashboard_widget.dart';
 
@@ -96,8 +98,9 @@ class _DashboardComponentState extends State<DashboardComponent> {
                             crossAxisCount: 4,
                             crossAxisSpacing: Dimensions.smSize,
                           ),
-                          itemCount: featureMenuData.length,
+                          itemCount: app.appController.servicesList.length,
                           itemBuilder: (BuildContext ctx, index) {
+                            final data = app.appController.servicesList[index];
                             return GestureDetector(
                               onTap: () {},
                               child: Container(
@@ -114,7 +117,9 @@ class _DashboardComponentState extends State<DashboardComponent> {
                                       height: Dimensions.smSize / 1.5,
                                     ),
                                     Text(
-                                      featureMenuData[index].title,
+                                      data.serviceName != null
+                                          ? data.serviceName!.toUpperCase()
+                                          : 'N/A',
                                       style: const TextStyle(
                                         color: RGB.whiteColor,
                                         fontSize: Dimensions.smSize,
@@ -127,8 +132,8 @@ class _DashboardComponentState extends State<DashboardComponent> {
                           }),
                     ),
                     // title
-                    dashboardTitle('Hire a servie pro'),
-                    // hire servie
+                    dashboardTitle('Hire a service pro'),
+                    // hire service
                     SizedBox(
                       height: 274,
                       child: ListView.builder(
