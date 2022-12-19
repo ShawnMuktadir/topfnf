@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:topfnf/controllers/app_controller.dart';
 import 'package:topfnf/data/params_args.dart';
@@ -13,7 +12,7 @@ class MyApplication {
     return _myApplication;
   }
 
-  MyApplication._i() {}
+  MyApplication._i();
 
   AppController get appController {
     return _appController;

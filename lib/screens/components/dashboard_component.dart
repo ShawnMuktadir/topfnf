@@ -1,5 +1,7 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
-import 'package:topfnf/models/services_model.dart';
+import 'package:get/get.dart';
 import 'package:topfnf/utils/color_utils.dart';
 import 'package:topfnf/utils/dimension_utils.dart';
 import 'package:topfnf/utils/my_application.dart';
@@ -14,19 +16,6 @@ class DashboardComponent extends StatefulWidget {
 }
 
 class _DashboardComponentState extends State<DashboardComponent> {
-  List<ServicesModel> uniqueList = [];
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      var serviceName = <String>{};
-      uniqueList = app.appController.servicesList
-          .where((service) => serviceName.add(service.serviceName!))
-          .toList();
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -103,50 +92,59 @@ class _DashboardComponentState extends State<DashboardComponent> {
                           Dimensions.defaultSize,
                         ),
                       ),
-                      child: GridView.builder(
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            childAspectRatio: 4 / 2.75,
-                            crossAxisCount: 4,
-                            crossAxisSpacing: Dimensions.smSize,
-                          ),
-                          itemCount: uniqueList.length,
-                          itemBuilder: (BuildContext ctx, index) {
-                            return GestureDetector(
-                              onTap: () {},
-                              child: Container(
-                                padding: const EdgeInsets.all(1.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Expanded(
-                                      child: Image.asset(
-                                        'assets/images/menu/hvac.png',
-                                        width: 24,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: Dimensions.smSize / 1.5,
-                                    ),
-                                    Text(
-                                      uniqueList.isNotEmpty &&
-                                              uniqueList[index].serviceName !=
-                                                  null
-                                          ? uniqueList[index]
-                                              .serviceName!
-                                              .toUpperCase()
-                                          : 'N/A',
-                                      style: const TextStyle(
-                                        color: RGB.whiteColor,
-                                        fontSize: Dimensions.smSize,
-                                      ),
-                                    ),
-                                  ],
+                      child: Obx(
+                        () => app.appController.isLoading.value
+                            ? const Center(
+                                child: CircularProgressIndicator(
+                                  color: RGB.whiteColor,
                                 ),
-                              ),
-                            );
-                          }),
+                              )
+                            : GridView.builder(
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                  childAspectRatio: 4 / 2.75,
+                                  crossAxisCount: 4,
+                                  crossAxisSpacing: Dimensions.smSize,
+                                ),
+                                itemCount:
+                                    app.appController.servicesList.length,
+                                itemBuilder: (BuildContext ctx, index) {
+                                  int randomNumber = Random().nextInt(8) + 1;
+                                  return GestureDetector(
+                                    onTap: () {},
+                                    child: Container(
+                                      padding: const EdgeInsets.all(1.0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Expanded(
+                                            child: Image.asset(
+                                              'assets/images/menu/$randomNumber.png',
+                                              width: 24,
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: Dimensions.smSize / 1.5,
+                                          ),
+                                          Text(
+                                            app.appController
+                                                .servicesList[index].serviceName
+                                                .toString()
+                                                .toUpperCase(),
+                                            style: const TextStyle(
+                                              color: RGB.whiteColor,
+                                              fontSize: Dimensions.smSize,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                }),
+                      ),
                     ),
                     // title
                     dashboardTitle('Hire a service pro'),
