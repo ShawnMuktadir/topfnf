@@ -1,4 +1,8 @@
-class ServicesModel {
+// ignore_for_file: must_be_immutable
+
+import 'package:equatable/equatable.dart';
+
+class ServicesModel extends Equatable {
   int? id;
   String? serviceName;
   String? description;
@@ -45,4 +49,7 @@ class ServicesModel {
     data['updated_at'] = updatedAt;
     return data;
   }
+
+  @override
+  List<Object?> get props => [serviceName];
 }

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:topfnf/data/feature_menu_data.dart';
+import 'package:topfnf/models/services_model.dart';
 import 'package:topfnf/utils/color_utils.dart';
 import 'package:topfnf/utils/dimension_utils.dart';
-import 'package:topfnf/utils/log_utils.dart';
 import 'package:topfnf/utils/my_application.dart';
 import 'package:topfnf/utils/style_utils.dart';
 import 'package:topfnf/widgets/dashboard_widget.dart';
@@ -15,6 +14,19 @@ class DashboardComponent extends StatefulWidget {
 }
 
 class _DashboardComponentState extends State<DashboardComponent> {
+  List<ServicesModel> uniqueList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      var serviceName = <String>{};
+      uniqueList = app.appController.servicesList
+          .where((service) => serviceName.add(service.serviceName!))
+          .toList();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -98,9 +110,8 @@ class _DashboardComponentState extends State<DashboardComponent> {
                             crossAxisCount: 4,
                             crossAxisSpacing: Dimensions.smSize,
                           ),
-                          itemCount: app.appController.servicesList.length,
+                          itemCount: uniqueList.length,
                           itemBuilder: (BuildContext ctx, index) {
-                            final data = app.appController.servicesList[index];
                             return GestureDetector(
                               onTap: () {},
                               child: Container(
@@ -109,16 +120,22 @@ class _DashboardComponentState extends State<DashboardComponent> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    Image.asset(
-                                      featureMenuData[index].icon,
-                                      width: 24,
+                                    Expanded(
+                                      child: Image.asset(
+                                        'assets/images/menu/hvac.png',
+                                        width: 24,
+                                      ),
                                     ),
                                     const SizedBox(
                                       height: Dimensions.smSize / 1.5,
                                     ),
                                     Text(
-                                      data.serviceName != null
-                                          ? data.serviceName!.toUpperCase()
+                                      uniqueList.isNotEmpty &&
+                                              uniqueList[index].serviceName !=
+                                                  null
+                                          ? uniqueList[index]
+                                              .serviceName!
+                                              .toUpperCase()
                                           : 'N/A',
                                       style: const TextStyle(
                                         color: RGB.whiteColor,
